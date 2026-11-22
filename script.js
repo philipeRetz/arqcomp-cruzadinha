@@ -397,14 +397,239 @@ function ligarEventosCruzadinha() {
   }
 }
 
+var BUSCA_PALAVRAS = [
+  "CPU", "ULA", "UC", "REGISTRADORES", "RAM", "ROM", "EEPROM", "FLASH",
+  "CACHE", "MEMORIADEMASSA", "DMA", "ADDRESSBUS", "DATABUS", "MICROCONTROLADOR", "DUALCORE", "QUADCORE"
+];
+
+var GRADE_BUSCA = [
+  "JOLRVPLDALDXRIEMAMWM",
+  "QUFVLQHLWAXNOUATOVYJ",
+  "VXLEEPROMNLKGKWUCPUF",
+  "DIVANGSNKVZLNIKVGYCG",
+  "TLWFKXUTOQANZKLFIHXT",
+  "UQKLJSVQWHKVDATABUSM",
+  "NXFAMKJWZDERNHZZVNLE",
+  "YZASUDSFFVMATEKPRCLM",
+  "LKPHJWTWSEEMWWJNEYSO",
+  "PTHXEJYGIIFAXRQEGVNR",
+  "BIFZBCXSURWVPWOOIXMI",
+  "RVGQQIEGBOHTDPWMSLCA",
+  "MICROCONTROLADORTAZD",
+  "QUADCOREOKOYPKIVRGRE",
+  "ADDRESSBUSEDRKJWAFTM",
+  "TUZLNZJCXPFMISCYDLTA",
+  "IJDUALCOREJAQIAXOCCS",
+  "GNCSCINMXQOKIDCGRZZS",
+  "ODLWIUCXAWPZSSHGEYDA",
+  "UNZZNSCYAHPSZPERSHYW"
+];
+
+var buscaTabuleiroEl = document.getElementById("ws-board");
+var buscaContadorEl = document.getElementById("ws-counter");
+var buscaListaEl = document.getElementById("ws-words");
+
+var buscaCelulas = [];
+var palavrasAchadas = [];
+var inicioSelecao = null;
+var selecaoAtual = [];
+var inicioPendente = null;
+
+function montarCacaPalavras() {
+  buscaTabuleiroEl.innerHTML = "";
+  buscaListaEl.innerHTML = "";
+  buscaCelulas = [];
+
+  for (var linha = 0; linha < 20; linha++) {
+    for (var coluna = 0; coluna < 20; coluna++) {
+      var div = document.createElement("div");
+      div.className = "ws-cell";
+      div.textContent = GRADE_BUSCA[linha][coluna];
+      div.dataset.row = linha;
+      div.dataset.col = coluna;
+      buscaTabuleiroEl.appendChild(div);
+      buscaCelulas.push(div);
+    }
+  }
+
+  for (var i = 0; i < BUSCA_PALAVRAS.length; i++) {
+    var item = document.createElement("li");
+    item.className = "ws-word";
+    item.dataset.word = BUSCA_PALAVRAS[i];
+    item.textContent = BUSCA_PALAVRAS[i];
+    buscaListaEl.appendChild(item);
+  }
+}
+
+function pegarCelulaBusca(linha, coluna) {
+  return buscaCelulas[linha * 20 + coluna];
+}
+
+function linhaReta(inicio, fim) {
+  var dLinha = fim[0] - inicio[0];
+  var dColuna = fim[1] - inicio[1];
+  var ehReta = dLinha === 0 || dColuna === 0 || Math.abs(dLinha) === Math.abs(dColuna);
+  if (!ehReta) return null;
+
+  var passos = Math.max(Math.abs(dLinha), Math.abs(dColuna));
+  var passoLinha = dLinha === 0 ? 0 : dLinha / Math.abs(dLinha);
+  var passoColuna = dColuna === 0 ? 0 : dColuna / Math.abs(dColuna);
+
+  var linha = [];
+  for (var i = 0; i <= passos; i++) {
+    linha.push([inicio[0] + passoLinha * i, inicio[1] + passoColuna * i]);
+  }
+  return linha;
+}
+
+function limparSelecaoBusca() {
+  for (var i = 0; i < selecaoAtual.length; i++) {
+    var casa = selecaoAtual[i];
+    pegarCelulaBusca(casa[0], casa[1]).classList.remove("is-selecting");
+  }
+  selecaoAtual = [];
+}
+
+function destacarSelecao(linha) {
+  limparSelecaoBusca();
+  selecaoAtual = linha;
+  for (var i = 0; i < linha.length; i++) {
+    pegarCelulaBusca(linha[i][0], linha[i][1]).classList.add("is-selecting");
+  }
+}
+
+function posicaoDoEvento(event) {
+  var elemento = document.elementFromPoint(event.clientX, event.clientY);
+  if (!elemento) return null;
+  var celula = elemento.closest(".ws-cell");
+  if (!celula) return null;
+  return [Number(celula.dataset.row), Number(celula.dataset.col)];
+}
+
+function atualizarContadorBusca() {
+  buscaContadorEl.textContent = palavrasAchadas.length + " de " + BUSCA_PALAVRAS.length + " palavras encontradas";
+}
+
+function finalizarSelecao(linha) {
+  if (!linha || linha.length === 0) return;
+
+  var texto = "";
+  for (var i = 0; i < linha.length; i++) texto += GRADE_BUSCA[linha[i][0]][linha[i][1]];
+  var textoInvertido = texto.split("").reverse().join("");
+
+  for (var i = 0; i < BUSCA_PALAVRAS.length; i++) {
+    var palavra = BUSCA_PALAVRAS[i];
+    if (palavrasAchadas.indexOf(palavra) !== -1) continue;
+
+    if (texto === palavra || textoInvertido === palavra) {
+      palavrasAchadas.push(palavra);
+      for (var j = 0; j < linha.length; j++) pegarCelulaBusca(linha[j][0], linha[j][1]).classList.add("is-found");
+
+      var itens = buscaListaEl.querySelectorAll(".ws-word");
+      for (var k = 0; k < itens.length; k++) {
+        if (itens[k].dataset.word === palavra) itens[k].classList.add("is-found");
+      }
+
+      atualizarContadorBusca();
+      return;
+    }
+  }
+}
+
+function reiniciarBusca() {
+  palavrasAchadas = [];
+  limparSelecaoBusca();
+  inicioSelecao = null;
+  inicioPendente = null;
+
+  for (var i = 0; i < buscaCelulas.length; i++) buscaCelulas[i].classList.remove("is-selecting", "is-found");
+  var itens = buscaListaEl.querySelectorAll(".ws-word");
+  for (var i = 0; i < itens.length; i++) itens[i].classList.remove("is-found");
+
+  atualizarContadorBusca();
+}
+
+function ligarEventosBusca() {
+  buscaTabuleiroEl.addEventListener("pointerdown", function (event) {
+    var pos = posicaoDoEvento(event);
+    if (!pos) return;
+
+    event.preventDefault();
+    if (buscaTabuleiroEl.setPointerCapture) {
+      try { buscaTabuleiroEl.setPointerCapture(event.pointerId); } catch (e) {}
+    }
+
+    if (inicioPendente && (inicioPendente[0] !== pos[0] || inicioPendente[1] !== pos[1])) {
+      var linha = linhaReta(inicioPendente, pos);
+      inicioPendente = null;
+      inicioSelecao = null;
+      limparSelecaoBusca();
+      finalizarSelecao(linha);
+      return;
+    }
+
+    inicioSelecao = pos;
+    inicioPendente = null;
+    destacarSelecao([pos]);
+  });
+
+  buscaTabuleiroEl.addEventListener("pointermove", function (event) {
+    if (!inicioSelecao) return;
+    var pos = posicaoDoEvento(event);
+    if (!pos) return;
+    var linha = linhaReta(inicioSelecao, pos);
+    if (linha) destacarSelecao(linha);
+  });
+
+  buscaTabuleiroEl.addEventListener("pointerup", function (event) {
+    if (!inicioSelecao) return;
+
+    var pos = posicaoDoEvento(event);
+    var linha = null;
+    if (pos) linha = linhaReta(inicioSelecao, pos);
+
+    if (linha && linha.length > 1) {
+      finalizarSelecao(linha);
+      limparSelecaoBusca();
+      inicioSelecao = null;
+      inicioPendente = null;
+      return;
+    }
+
+    if (selecaoAtual.length > 1) {
+      finalizarSelecao(selecaoAtual);
+      limparSelecaoBusca();
+      inicioSelecao = null;
+      inicioPendente = null;
+      return;
+    }
+
+    inicioPendente = inicioSelecao;
+    inicioSelecao = null;
+  });
+
+  buscaTabuleiroEl.addEventListener("pointercancel", function () {
+    limparSelecaoBusca();
+    inicioSelecao = null;
+  });
+
+  document.getElementById("ws-reset-btn").addEventListener("click", reiniciarBusca);
+}
+
 function iniciar() {
+  montarCacaPalavras();
+  ligarEventosBusca();
+  atualizarContadorBusca();
+
   prepararPalavras();
   colocarNumeros();
   montarTabuleiro();
   montarPistas();
   ligarEventosCruzadinha();
+
   document.getElementById("check-btn").addEventListener("click", conferirRespostas);
   document.getElementById("reset-btn").addEventListener("click", reiniciarCruzadinha);
+
   atualizarStatus();
 }
 
