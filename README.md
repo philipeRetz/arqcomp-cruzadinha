@@ -21,18 +21,18 @@ Jogo de caça-palavras e cruzadinha
 - **12 palavras**, distribuídas na horizontal e na vertical.
 - **5 palavras se cruzam diretamente.**
 - **Duas palavras aparecem de trás para frente.**
-- **Palavras utilizadas e suas dicas:** "RAM", dica: "Memória principal volátil, onde ficam os programas em execução." 
-"REGISTRADORES", dica: "Memórias internas ultrarrápidas do processador, usadas durante a execução."  
-"CPU", dica: "Circuito que busca, decodifica e executa as instruções de um programa."  
-"DATABUS", dica: "Vias que levam o conteúdo efetivamente lido ou gravado na memória."  
-"DMA", dica: "Técnica que transfere dados entre periféricos e memória sem passar pelo processador."  
-"ROM", dica: "Memória gravada de fábrica, usada na inicialização e que não pode ser alterada."  
-"ADDRESSBUS", dica: "Vias que levam o número da posição de memória a ser acessada."  
-"MICROCONTROLADOR", dica: "Chip que reúne processador, memória e periféricos para controlar um dispositivo."  
-"ULA", dica: "Parte do processador que faz contas e comparações lógicas."  
-"UC", dica: "Setor que gera os sinais de comando e coordena os demais componentes."  
-"CACHE", dica: "Memória rápida que guarda cópias de dados muito usados pelo processador."  
-"DUALCORE", dica: "Chip com dois núcleos de processamento no mesmo encapsulamento."
+- **Palavras utilizadas e suas dicas:** "RAM", dica: "Memória principal do computador; é volátil e guarda programas e dados enquanto estão em uso." 
+"REGISTRADORES", dica: "Memórias muito pequenas e rápidas dentro do processador, usadas durante a execução das instruções."  
+"CPU", dica: "Parte central do computador que busca, interpreta e executa as instruções dos programas."  
+"DATABUS", dica: "Caminhos por onde os dados passam entre o processador, a memória e outros componentes."  
+"DMA", dica: "Recurso que permite transferir dados entre periféricos e a memória sem passar pelo processador."  
+"ROM", dica: "Memória não volátil, com conteúdo gravado de fábrica, usada na inicialização do computador."  
+"ADDRESSBUS", dica: "Caminhos que indicam o endereço da memória que o processador quer acessar."  
+"MICROCONTROLADOR", dica: "Chip que reúne processador, memória e periféricos para controlar um dispositivo eletrônico."  
+"ULA", dica: "Parte do processador que faz cálculos matemáticos e comparações lógicas."  
+"UC", dica: "Parte do processador que comanda e coordena o funcionamento dos outros componentes."  
+"CACHE", dica: "Memória rápida que guarda cópias de dados usados com frequência pelo processador."  
+"DUALCORE", dica: "Processador com dois núcleos no mesmo chip, capaz de executar tarefas em paralelo."
 
 ## Caça-palavras
 
