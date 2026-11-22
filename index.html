@@ -4,31 +4,63 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cruzadinha de Arquitetura Computacional</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+  <header class="site-header">
     <h1>Jogo de Arq.Comp</h1>
-    <p>
+    <p class="intro">
       Encontre as 16 palavras no caça-palavras e complete a cruzadinha de 12 palavras. <br>
       No caça-palavras, arraste da primeira até a última letra, na horizontal, vertical ou diagonal. <br>
-      Na cruzadinha, as pistas com  &#8592; devem ser lidas da direita
-      para a esquerda e as com &#8593;, de baixo para cima.
+      Na cruzadinha, as pistas com <span class="arrow">&#8592;</span> devem ser lidas da direita
+      para a esquerda e as com <span class="arrow">&#8593;</span>, de baixo para cima.
     </p>
+  </header>
 
+  <main>
+    <section class="wordsearch" aria-label="Caça-palavras">
       <h2>Caça-palavras</h2>
-      <p>0 de 16 palavras encontradas</p>
 
-   <button>Reiniciar caça-palavras</button>
+      <div class="toolbar">
+        <p id="ws-counter" class="counter" aria-live="polite">0 de 16 palavras encontradas</p>
+        <div class="actions">
+          <button id="ws-reset-btn" class="btn btn--ghost" type="button">Reiniciar caça-palavras</button>
+        </div>
+      </div>
 
-    <h1>Cruzadinha</h1>
-        <p>0 de 12 palavras corretas</p>
-        
-          <button>Conferir</button>
-          <button>Reiniciar</button>
+      <div class="board-wrap">
+        <div id="ws-board" class="ws-board" aria-label="Caça-palavras 20 por 20"></div>
+      </div>
 
+      <ul id="ws-words" class="ws-words" aria-label="Palavras do caça-palavras"></ul>
+    </section>
+
+    <section class="game" aria-label="Jogo">
+      <div class="toolbar">
+        <p id="counter" class="counter" aria-live="polite">0 de 12 palavras</p>
+        <div class="actions">
+          <button id="check-btn" class="btn btn--primary" type="button">Conferir</button>
+          <button id="reset-btn" class="btn btn--ghost" type="button">Reiniciar</button>
+        </div>
+      </div>
+
+      <div class="board-wrap">
+        <div id="board" class="board" aria-label="Tabuleiro de cruzadinha 20 por 20"></div>
+      </div>
+    </section>
+
+    <section class="clues" aria-label="Pistas">
+      <div class="clues-column">
         <h2>Horizontais</h2>
-       
+        <ol id="clues-h" class="clue-list"></ol>
+      </div>
+
+      <div class="clues-column">
         <h2>Verticais</h2>
-       
+        <ol id="clues-v" class="clue-list"></ol>
+      </div>
+    </section>
+  </main>
 </body>
 </html>
