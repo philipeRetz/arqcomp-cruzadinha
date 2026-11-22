@@ -1,18 +1,18 @@
 ﻿var TAMANHO = 20;
 
 var PALAVRAS = [
-  { resposta: "RAM", dica: "Memória principal volátil, onde ficam os programas em execução.", linha: 0, coluna: 17, dir: "H", invertida: false },
-  { resposta: "REGISTRADORES", dica: "Memórias internas ultrarrápidas do processador, usadas durante a execução.", linha: 0, coluna: 17, dir: "V", invertida: false },
-  { resposta: "CPU", dica: "Circuito que busca, decodifica e executa as instruções de um programa.", linha: 5, coluna: 13, dir: "V", invertida: false },
-  { resposta: "DATABUS", dica: "Vias que levam o conteúdo efetivamente lido ou gravado na memória.", linha: 7, coluna: 12, dir: "H", invertida: true },
-  { resposta: "DMA", dica: "Técnica que transfere dados entre periféricos e memória sem passar pelo processador.", linha: 9, coluna: 2, dir: "V", invertida: false },
-  { resposta: "ROM", dica: "Memória gravada de fábrica, usada na inicialização e que não pode ser alterada.", linha: 9, coluna: 12, dir: "V", invertida: false },
-  { resposta: "ADDRESSBUS", dica: "Vias que levam o número da posição de memória a ser acessada.", linha: 9, coluna: 15, dir: "V", invertida: false },
-  { resposta: "MICROCONTROLADOR", dica: "Chip que reúne processador, memória e periféricos para controlar um dispositivo.", linha: 10, coluna: 2, dir: "H", invertida: false },
-  { resposta: "ULA", dica: "Parte do processador que faz contas e comparações lógicas.", linha: 11, coluna: 0, dir: "H", invertida: false },
-  { resposta: "UC", dica: "Setor que gera os sinais de comando e coordena os demais componentes.", linha: 12, coluna: 3, dir: "H", invertida: false },
-  { resposta: "CACHE", dica: "Memória rápida que guarda cópias de dados muito usados pelo processador.", linha: 8, coluna: 4, dir: "V", invertida: true },
-  { resposta: "DUALCORE", dica: "Chip com dois núcleos de processamento no mesmo encapsulamento.", linha: 13, coluna: 8, dir: "H", invertida: false }
+  { resposta: "RAM", dica: "Memória principal do computador; é volátil e guarda programas e dados enquanto estão em uso.", linha: 0, coluna: 17, dir: "H", invertida: false },
+  { resposta: "REGISTRADORES", dica: "Memórias muito pequenas e rápidas dentro do processador, usadas durante a execução das instruções.", linha: 0, coluna: 17, dir: "V", invertida: false },
+  { resposta: "CPU", dica: "Parte central do computador que busca, interpreta e executa as instruções dos programas.", linha: 5, coluna: 13, dir: "V", invertida: false },
+  { resposta: "DATABUS", dica: "Caminhos por onde os dados passam entre o processador, a memória e outros componentes.", linha: 7, coluna: 12, dir: "H", invertida: true },
+  { resposta: "DMA", dica: "Recurso que permite transferir dados entre periféricos e a memória sem passar pelo processador.", linha: 9, coluna: 2, dir: "V", invertida: false },
+  { resposta: "ROM", dica: "Memória não volátil, com conteúdo gravado de fábrica, usada na inicialização do computador.", linha: 9, coluna: 12, dir: "V", invertida: false },
+  { resposta: "ADDRESSBUS", dica: "Caminhos que indicam o endereço da memória que o processador quer acessar.", linha: 9, coluna: 15, dir: "V", invertida: false },
+  { resposta: "MICROCONTROLADOR", dica: "Chip que reúne processador, memória e periféricos para controlar um dispositivo eletrônico.", linha: 10, coluna: 2, dir: "H", invertida: false },
+  { resposta: "ULA", dica: "Parte do processador que faz cálculos matemáticos e comparações lógicas.", linha: 11, coluna: 0, dir: "H", invertida: false },
+  { resposta: "UC", dica: "Parte do processador que comanda e coordena o funcionamento dos outros componentes.", linha: 12, coluna: 3, dir: "H", invertida: false },
+  { resposta: "CACHE", dica: "Memória rápida que guarda cópias de dados usados com frequência pelo processador.", linha: 8, coluna: 4, dir: "V", invertida: true },
+  { resposta: "DUALCORE", dica: "Processador com dois núcleos no mesmo chip, capaz de executar tarefas em paralelo.", linha: 13, coluna: 8, dir: "H", invertida: false }
 ];
 
 var celulas = {};
